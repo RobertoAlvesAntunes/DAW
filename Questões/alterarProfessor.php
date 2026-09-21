@@ -52,7 +52,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST')
         <br></br>
         Novo Endereço : <input type="text" name="endereço">
         <br></br>
-        <input type="submit" value="Alterar_Professor">
+        <input type="submit" value="alterarProfessor">
     </form>
 
     <h1><?php echo $msg ?></h1>
