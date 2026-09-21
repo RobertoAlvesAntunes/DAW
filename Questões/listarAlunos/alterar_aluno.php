@@ -50,7 +50,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <br><br>
 
     Matricula:
-    <input type="text" name="matricula" value="<?php echo $matricula ?>" readonly>
+    <input type="text" name="matricula" value="<?php echo $matricula ?>">
 
     <br><br>
 
