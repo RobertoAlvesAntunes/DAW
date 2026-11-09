@@ -1,0 +1,45 @@
+
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora</title>
+
+    <script>
+        function Calcula() {
+            let a = document.getElementById("a").value;
+            let b = document.getElementById("b").value;
+            let op = document.getElementById("op").value;
+
+            let xmlhttp = new XMLHttpRequest();
+
+            xmlhttp.onreadystatechange = function() {
+                if (this.readyState == 4 && this.status == 200) {
+                    document.getElementById("msg").innerHTML = this.responseText;
+                }
+            }
+
+            xmlhttp.open("GET", "calculadora.php?a=" + a + "&b=" + b + "&op=" + op);
+
+            xmlhttp.send();
+        }
+    </script>
+</head>
+
+<body>
+
+    <form action="" method="GET" name="calculadora" id="calculadora">
+        a: <input type="text" name="a" id="a"><br>
+        operador: <input type="text" name="op" id="op"><br>
+        b: <input type="text" name="b" id="b">
+
+        <input type="button" value="Enviar" onclick="Calcula()">
+    </form>
+
+    <br><br>
+
+    <p id="msg"></p>
+
+</body>
+</html>
