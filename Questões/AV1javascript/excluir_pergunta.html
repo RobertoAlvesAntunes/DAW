@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Excluir Pergunta</title>
+
+    <script>
+        function Excluir() {
+            let IDpergunta = document.getElementById("IDpergunta").value;
+
+            let xmlhttp = new XMLHttpRequest();
+
+            xmlhttp.onreadystatechange = function() {
+                if (this.readyState == 4 && this.status == 200) {
+                    document.getElementById("msg").innerHTML = this.responseText;
+                } else if (this.readyState == 4) {
+                    document.getElementById("msg").innerHTML = "Erro na requisição: " + this.status;
+                }
+            }
+
+            xmlhttp.open("GET", "excluir_pergunta.php?IDpergunta=" + IDpergunta);
+
+            xmlhttp.send();
+        }
+    </script>
+</head>
+
+<body>
+
+    <h1>Excluir Pergunta</h1>
+
+    <form action="" method="GET" name="frmExcluir" id="frmExcluir">
+        IDpergunta a excluir: <input type="text" name="IDpergunta" id="IDpergunta">
+        <br><br>
+        <input type="button" value="Excluir" onclick="Excluir()">
+    </form>
+
+    <br>
+
+    <p id="msg"></p>
+
+</body>
+</html>

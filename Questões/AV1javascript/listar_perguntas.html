@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Listar Perguntas e Respostas</title>
+
+    <script>
+        function Listar() {
+            let xmlhttp = new XMLHttpRequest();
+
+            xmlhttp.onreadystatechange = function() {
+                if (this.readyState == 4 && this.status == 200) {
+                    document.getElementById("lista").innerHTML = this.responseText;
+                } else if (this.readyState == 4) {
+                    document.getElementById("lista").innerHTML = "Erro na requisição: " + this.status;
+                }
+            }
+
+            xmlhttp.open("GET", "listar_perguntas.php");
+
+            xmlhttp.send();
+        }
+    </script>
+</head>
+
+<body>
+
+    <h1>Listar Perguntas e Respostas</h1>
+
+    <form action="" method="GET" name="frmListar" id="frmListar">
+        <input type="button" value="Listar" onclick="Listar()">
+    </form>
+
+    <br>
+
+    <div id="lista"></div>
+
+</body>
+</html>

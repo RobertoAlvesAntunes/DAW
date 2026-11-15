@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Alterar Pergunta Multipla</title>
+
+    <script>
+        function Buscar() {
+            let IDpergunta = document.getElementById("IDpergunta").value;
+
+            let xmlhttp = new XMLHttpRequest();
+
+            xmlhttp.onreadystatechange = function() {
+                if (this.readyState == 4 && this.status == 200) {
+                    document.getElementById("msg").innerHTML = this.responseText;
+                } else if (this.readyState == 4) {
+                    document.getElementById("msg").innerHTML = "Erro na requisição: " + this.status;
+                }
+            }
+
+            xmlhttp.open("GET", "alterar_multipla.php?acao=buscar&IDpergunta=" + IDpergunta);
+
+            xmlhttp.send();
+        }
+
+        function Salvar() {
+            let IDpergunta = document.getElementById("IDpergunta").value;
+            let pergunta = document.getElementById("pergunta").value;
+
+            let IDresposta1 = document.getElementById("IDresposta1").value;
+            let resposta1 = document.getElementById("resposta1").value;
+            let certa1 = document.getElementById("certa1").value;
+
+            let IDresposta2 = document.getElementById("IDresposta2").value;
+            let resposta2 = document.getElementById("resposta2").value;
+            let certa2 = document.getElementById("certa2").value;
+
+            let IDresposta3 = document.getElementById("IDresposta3").value;
+            let resposta3 = document.getElementById("resposta3").value;
+            let certa3 = document.getElementById("certa3").value;
+
+            let IDresposta4 = document.getElementById("IDresposta4").value;
+            let resposta4 = document.getElementById("resposta4").value;
+            let certa4 = document.getElementById("certa4").value;
+
+            let xmlhttp = new XMLHttpRequest();
+
+            xmlhttp.onreadystatechange = function() {
+                if (this.readyState == 4 && this.status == 200) {
+                    document.getElementById("msg").innerHTML = this.responseText;
+                } else if (this.readyState == 4) {
+                    document.getElementById("msg").innerHTML = "Erro na requisição: " + this.status;
+                }
+            }
+
+            xmlhttp.open("GET", "alterar_multipla.php?acao=salvar" +
+                "&IDpergunta=" + IDpergunta +
+                "&pergunta=" + pergunta +
+                "&IDresposta1=" + IDresposta1 +
+                "&resposta1=" + resposta1 +
+                "&certa1=" + certa1 +
+                "&IDresposta2=" + IDresposta2 +
+                "&resposta2=" + resposta2 +
+                "&certa2=" + certa2 +
+                "&IDresposta3=" + IDresposta3 +
+                "&resposta3=" + resposta3 +
+                "&certa3=" + certa3 +
+                "&IDresposta4=" + IDresposta4 +
+                "&resposta4=" + resposta4 +
+                "&certa4=" + certa4);
+
+            xmlhttp.send();
+        }
+    </script>
+</head>
+
+<body>
+
+    <h1>Alterar Pergunta (Múltipla Escolha)</h1>
+
+    <form action="" method="GET" name="frmBuscar" id="frmBuscar">
+        IDpergunta a alterar: <input type="text" name="IDpergunta" id="IDpergunta">
+        <br><br>
+        <input type="button" value="Buscar" onclick="Buscar()">
+    </form>
+
+    <br>
+
+    <div id="msg"></div>
+
+</body>
+</html>

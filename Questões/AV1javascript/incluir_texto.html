@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Incluir Pergunta de Texto</title>
+
+    <script>
+        function IncluirPergunta() {
+            let IDpergunta = document.getElementById("IDperguntaIncluir").value;
+            let pergunta = document.getElementById("pergunta").value;
+
+            let xmlhttp = new XMLHttpRequest();
+
+            xmlhttp.onreadystatechange = function() {
+                if (this.readyState == 4 && this.status == 200) {
+                    document.getElementById("msg").innerHTML = this.responseText;
+                } else if (this.readyState == 4) {
+                    document.getElementById("msg").innerHTML = "Erro na requisição: " + this.status;
+                }
+            }
+
+            xmlhttp.open("GET", "incluir_texto.php?acao=incluirPergunta&IDpergunta=" + IDpergunta + "&pergunta=" + pergunta);
+
+            xmlhttp.send();
+        }
+
+        function IncluirResposta() {
+            let IDresposta = document.getElementById("IDresposta").value;
+            let IDpergunta = document.getElementById("IDperguntaResposta").value;
+            let resposta = document.getElementById("resposta").value;
+
+            let xmlhttp = new XMLHttpRequest();
+
+            xmlhttp.onreadystatechange = function() {
+                if (this.readyState == 4 && this.status == 200) {
+                    document.getElementById("msg").innerHTML = this.responseText;
+                } else if (this.readyState == 4) {
+                    document.getElementById("msg").innerHTML = "Erro na requisição: " + this.status;
+                }
+            }
+
+            xmlhttp.open("GET", "incluir_texto.php?acao=incluirResposta&IDresposta=" + IDresposta + "&IDpergunta=" + IDpergunta + "&resposta=" + resposta);
+
+            xmlhttp.send();
+        }
+    </script>
+</head>
+
+<body>
+
+    <h1>Incluir Pergunta de Texto</h1>
+
+    <form action="" method="GET" name="frmPergunta" id="frmPergunta">
+        IDpergunta: <input type="text" name="IDperguntaIncluir" id="IDperguntaIncluir">
+        <br><br>
+        Pergunta: <input type="text" name="pergunta" id="pergunta">
+        <br><br>
+        <input type="button" value="incluir pergunta" onclick="IncluirPergunta()">
+    </form>
+
+    <br>
+
+    <form action="" method="GET" name="frmResposta" id="frmResposta">
+        IDresposta: <input type="text" name="IDresposta" id="IDresposta">
+        <br><br>
+        IDpergunta: <input type="text" name="IDperguntaResposta" id="IDperguntaResposta">
+        <br><br>
+        Resposta correta: <input type="text" name="resposta" id="resposta">
+        <br><br>
+        <input type="button" value="incluir resposta" onclick="IncluirResposta()">
+    </form>
+
+    <br>
+
+    <p id="msg"></p>
+
+</body>
+</html>

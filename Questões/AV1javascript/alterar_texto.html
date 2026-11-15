@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Alterar Pergunta de Texto</title>
+
+    <script>
+        function Buscar() {
+            let IDpergunta = document.getElementById("IDpergunta").value;
+
+            let xmlhttp = new XMLHttpRequest();
+
+            xmlhttp.onreadystatechange = function() {
+                if (this.readyState == 4 && this.status == 200) {
+                    document.getElementById("msg").innerHTML = this.responseText;
+                } else if (this.readyState == 4) {
+                    document.getElementById("msg").innerHTML = "Erro na requisição: " + this.status;
+                }
+            }
+
+            xmlhttp.open("GET", "alterar_texto.php?acao=buscar&IDpergunta=" + IDpergunta);
+
+            xmlhttp.send();
+        }
+
+        function Salvar() {
+            let IDpergunta = document.getElementById("IDpergunta").value;
+            let pergunta = document.getElementById("pergunta").value;
+            let IDresposta = document.getElementById("IDresposta").value;
+            let resposta = document.getElementById("resposta").value;
+
+            let xmlhttp = new XMLHttpRequest();
+
+            xmlhttp.onreadystatechange = function() {
+                if (this.readyState == 4 && this.status == 200) {
+                    document.getElementById("msg").innerHTML = this.responseText;
+                } else if (this.readyState == 4) {
+                    document.getElementById("msg").innerHTML = "Erro na requisição: " + this.status;
+                }
+            }
+
+            xmlhttp.open("GET", "alterar_texto.php?acao=salvar" +
+                "&IDpergunta=" + IDpergunta +
+                "&pergunta=" + pergunta +
+                "&IDresposta=" + IDresposta +
+                "&resposta=" + resposta);
+
+            xmlhttp.send();
+        }
+    </script>
+</head>
+
+<body>
+
+    <h1>Alterar Pergunta de Texto</h1>
+
+    <form action="" method="GET" name="frmBuscar" id="frmBuscar">
+        IDpergunta a alterar: <input type="text" name="IDpergunta" id="IDpergunta">
+        <br><br>
+        <input type="button" value="Buscar" onclick="Buscar()">
+    </form>
+
+    <br>
+
+    <div id="msg"></div>
+
+</body>
+</html>

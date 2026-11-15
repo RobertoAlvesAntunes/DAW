@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CRUD Usuario</title>
+
+    <script>
+        function Incluir() {
+            let IDusuario = document.getElementById("IDusuarioIncluir").value;
+            let nome = document.getElementById("nomeIncluir").value;
+            let email = document.getElementById("emailIncluir").value;
+            let senha = document.getElementById("senhaIncluir").value;
+
+            let xmlhttp = new XMLHttpRequest();
+
+            xmlhttp.onreadystatechange = function() {
+                if (this.readyState == 4 && this.status == 200) {
+                    document.getElementById("msg").innerHTML = this.responseText;
+                } else if (this.readyState == 4) {
+                    document.getElementById("msg").innerHTML = "Erro na requisição: " + this.status;
+                }
+            }
+
+            xmlhttp.open("GET", "crud_usuario.php?acao=incluir&IDusuario=" + IDusuario + "&nome=" + nome + "&email=" + email + "&senha=" + senha);
+
+            xmlhttp.send();
+        }
+
+        function Buscar() {
+            let IDusuario = document.getElementById("IDusuarioBuscar").value;
+
+            let xmlhttp = new XMLHttpRequest();
+
+            xmlhttp.onreadystatechange = function() {
+                if (this.readyState == 4 && this.status == 200) {
+                    document.getElementById("editar").innerHTML = this.responseText;
+                } else if (this.readyState == 4) {
+                    document.getElementById("editar").innerHTML = "Erro na requisição: " + this.status;
+                }
+            }
+
+            xmlhttp.open("GET", "crud_usuario.php?acao=buscar&IDusuario=" + IDusuario);
+
+            xmlhttp.send();
+        }
+
+        function Salvar() {
+            let IDusuario = document.getElementById("IDusuarioEditar").value;
+            let nome = document.getElementById("nomeEditar").value;
+            let email = document.getElementById("emailEditar").value;
+            let senha = document.getElementById("senhaEditar").value;
+
+            let xmlhttp = new XMLHttpRequest();
+
+            xmlhttp.onreadystatechange = function() {
+                if (this.readyState == 4 && this.status == 200) {
+                    document.getElementById("editar").innerHTML = this.responseText;
+                } else if (this.readyState == 4) {
+                    document.getElementById("editar").innerHTML = "Erro na requisição: " + this.status;
+                }
+            }
+
+            xmlhttp.open("GET", "crud_usuario.php?acao=salvar&IDusuario=" + IDusuario + "&nome=" + nome + "&email=" + email + "&senha=" + senha);
+
+            xmlhttp.send();
+        }
+
+        function Excluir() {
+            let IDusuario = document.getElementById("IDusuarioExcluir").value;
+
+            let xmlhttp = new XMLHttpRequest();
+
+            xmlhttp.onreadystatechange = function() {
+                if (this.readyState == 4 && this.status == 200) {
+                    document.getElementById("msg").innerHTML = this.responseText;
+                } else if (this.readyState == 4) {
+                    document.getElementById("msg").innerHTML = "Erro na requisição: " + this.status;
+                }
+            }
+
+            xmlhttp.open("GET", "crud_usuario.php?acao=excluir&IDusuario=" + IDusuario);
+
+            xmlhttp.send();
+        }
+
+        function Listar() {
+            let xmlhttp = new XMLHttpRequest();
+
+            xmlhttp.onreadystatechange = function() {
+                if (this.readyState == 4 && this.status == 200) {
+                    document.getElementById("lista").innerHTML = this.responseText;
+                } else if (this.readyState == 4) {
+                    document.getElementById("lista").innerHTML = "Erro na requisição: " + this.status;
+                }
+            }
+
+            xmlhttp.open("GET", "crud_usuario.php?acao=listar");
+
+            xmlhttp.send();
+        }
+    </script>
+</head>
+
+<body>
+
+    <h1>CRUD Usuario</h1>
+
+    <div id="msg"></div>
+
+    <h2>Incluir Usuario</h2>
+    <form action="" method="GET" name="frmIncluir" id="frmIncluir">
+        IDusuario: <input type="text" name="IDusuarioIncluir" id="IDusuarioIncluir">
+        <br><br>
+        Nome: <input type="text" name="nomeIncluir" id="nomeIncluir">
+        <br><br>
+        Email: <input type="text" name="emailIncluir" id="emailIncluir">
+        <br><br>
+        Senha: <input type="text" name="senhaIncluir" id="senhaIncluir">
+        <br><br>
+        <input type="button" value="Incluir" onclick="Incluir()">
+    </form>
+
+    <br>
+
+    <h2>Buscar Usuario para Alterar</h2>
+    <form action="" method="GET" name="frmBuscar" id="frmBuscar">
+        IDusuario: <input type="text" name="IDusuarioBuscar" id="IDusuarioBuscar">
+        <br><br>
+        <input type="button" value="Buscar" onclick="Buscar()">
+    </form>
+
+    <div id="editar"></div>
+
+    <br>
+
+    <h2>Excluir Usuario</h2>
+    <form action="" method="GET" name="frmExcluir" id="frmExcluir">
+        IDusuario: <input type="text" name="IDusuarioExcluir" id="IDusuarioExcluir">
+        <br><br>
+        <input type="button" value="Excluir" onclick="Excluir()">
+    </form>
+
+    <br>
+
+    <h2>Listar Usuarios</h2>
+    <form action="" method="GET" name="frmListar" id="frmListar">
+        <input type="button" value="Listar" onclick="Listar()">
+    </form>
+
+    <br>
+
+    <div id="lista"></div>
+
+</body>
+</html>
