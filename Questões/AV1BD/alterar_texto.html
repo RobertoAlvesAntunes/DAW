@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Alterar Pergunta de Texto</title>
+
+    <script>
+        function Buscar() {
+            let IDpergunta = document.getElementById("IDpergunta").value;
+
+            let xmlhttp = new XMLHttpRequest();
+
+            xmlhttp.onreadystatechange = function() {
+                if (this.readyState == 4 && this.status == 200) {
+                    let objRetorno = JSON.parse(this.responseText);
+
+                    if (objRetorno.encontrou == "sim") {
+                        document.getElementById("pergunta").value = objRetorno.pergunta;
+                        document.getElementById("IDresposta").value = objRetorno.IDresposta;
+                        document.getElementById("resposta").value = objRetorno.resposta;
+                        document.getElementById("msg").innerHTML = "";
+                        document.getElementById("frmEditar").style.display = "block";
+                    } else {
+                        document.getElementById("frmEditar").style.display = "none";
+                        document.getElementById("msg").innerHTML = "Pergunta não encontrada.";
+                    }
+                } else if (this.readyState == 4) {
+                    document.getElementById("msg").innerHTML = "Erro na requisição: " + this.status;
+                }
+            }
+
+            xmlhttp.open("GET", "alterar_texto.php?acao=buscar&IDpergunta=" + encodeURIComponent(IDpergunta));
+
+            xmlhttp.send();
+        }
+
+        function Salvar() {
+            let IDpergunta = document.getElementById("IDpergunta").value;
+            let pergunta = document.getElementById("pergunta").value;
+            let IDresposta = document.getElementById("IDresposta").value;
+            let resposta = document.getElementById("resposta").value;
+
+            let xmlhttp = new XMLHttpRequest();
+
+            xmlhttp.onreadystatechange = function() {
+                if (this.readyState == 4 && this.status == 200) {
+                    let objRetorno = JSON.parse(this.responseText);
+                    document.getElementById("msg").innerHTML = objRetorno.msg;
+                    document.getElementById("frmEditar").style.display = "none";
+                } else if (this.readyState == 4) {
+                    document.getElementById("msg").innerHTML = "Erro na requisição: " + this.status;
+                }
+            }
+
+            xmlhttp.open("GET", "alterar_texto.php?acao=salvar&IDpergunta=" + encodeURIComponent(IDpergunta) + "&pergunta=" + encodeURIComponent(pergunta) + "&IDresposta=" + encodeURIComponent(IDresposta) + "&resposta=" + encodeURIComponent(resposta));
+
+            xmlhttp.send();
+        }
+    </script>
+</head>
+
+<body>
+
+    <h1>Alterar Pergunta de Texto</h1>
+
+    <form action="" method="GET" name="frmBuscar" id="frmBuscar">
+        IDpergunta a alterar: <input type="text" name="IDpergunta" id="IDpergunta">
+        <br><br>
+        <input type="button" value="Buscar" onclick="Buscar()">
+    </form>
+
+    <br>
+
+    <form action="" method="GET" name="frmEditar" id="frmEditar" style="display: none;">
+        <h2>Editar Pergunta</h2>
+
+        <input type="hidden" name="IDresposta" id="IDresposta">
+
+        Pergunta: <input type="text" name="pergunta" id="pergunta">
+        <br><br>
+
+        Resposta correta: <input type="text" name="resposta" id="resposta">
+        <br><br>
+
+        <input type="button" value="Salvar Alteração" onclick="Salvar()">
+    </form>
+
+    <br>
+
+    <div id="msg"></div>
+
+</body>
+</html>

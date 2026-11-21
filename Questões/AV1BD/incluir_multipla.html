@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Perguntas Multiplas</title>
+
+    <script>
+        function IncluirPergunta() {
+            let IDpergunta = document.getElementById("IDperguntaIncluir").value;
+            let pergunta = document.getElementById("pergunta").value;
+
+            let xmlhttp = new XMLHttpRequest();
+
+            xmlhttp.onreadystatechange = function() {
+                if (this.readyState == 4 && this.status == 200) {
+                    let objRetorno = JSON.parse(this.responseText);
+                    document.getElementById("msg").innerHTML = objRetorno.msg;
+                } else if (this.readyState == 4) {
+                    document.getElementById("msg").innerHTML = "Erro na requisição: " + this.status;
+                }
+            }
+
+            xmlhttp.open("GET", "incluir_multipla.php?acao=incluirPergunta&IDpergunta=" + encodeURIComponent(IDpergunta) + "&pergunta=" + encodeURIComponent(pergunta));
+
+            xmlhttp.send();
+        }
+
+        function IncluirResposta() {
+            let IDresposta = document.getElementById("IDresposta").value;
+            let IDpergunta = document.getElementById("IDperguntaResposta").value;
+            let resposta = document.getElementById("resposta").value;
+            let certa = document.getElementById("certa").value;
+
+            let xmlhttp = new XMLHttpRequest();
+
+            xmlhttp.onreadystatechange = function() {
+                if (this.readyState == 4 && this.status == 200) {
+                    let objRetorno = JSON.parse(this.responseText);
+                    document.getElementById("msg").innerHTML = objRetorno.msg;
+                } else if (this.readyState == 4) {
+                    document.getElementById("msg").innerHTML = "Erro na requisição: " + this.status;
+                }
+            }
+
+            xmlhttp.open("GET", "incluir_multipla.php?acao=incluirResposta&IDresposta=" + encodeURIComponent(IDresposta) + "&IDpergunta=" + encodeURIComponent(IDpergunta) + "&resposta=" + encodeURIComponent(resposta) + "&certa=" + encodeURIComponent(certa));
+
+            xmlhttp.send();
+        }
+    </script>
+</head>
+
+<body>
+
+    <h1>Perguntas Multiplas</h1>
+
+    <form action="" method="GET" name="frmPergunta" id="frmPergunta">
+        IDpergunta: <input type="text" name="IDperguntaIncluir" id="IDperguntaIncluir">
+        <br><br>
+        Pergunta: <input type="text" name="pergunta" id="pergunta">
+        <br><br>
+        <input type="button" value="incluir pergunta" onclick="IncluirPergunta()">
+    </form>
+
+    <br>
+
+    <form action="" method="GET" name="frmResposta" id="frmResposta">
+        IDresposta: <input type="text" name="IDresposta" id="IDresposta">
+        <br><br>
+        IDpergunta: <input type="text" name="IDperguntaResposta" id="IDperguntaResposta">
+        <br><br>
+        Resposta: <input type="text" name="resposta" id="resposta">
+        <br><br>
+        Certa (1 = sim, 0 = não): <input type="text" name="certa" id="certa">
+        <br><br>
+        <input type="button" value="incluir resposta" onclick="IncluirResposta()">
+    </form>
+
+    <br>
+
+    <p id="msg"></p>
+
+</body>
+</html>

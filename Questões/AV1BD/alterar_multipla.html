@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Alterar Pergunta Multipla</title>
+
+    <script>
+        function Buscar() {
+            let IDpergunta = document.getElementById("IDpergunta").value;
+
+            let xmlhttp = new XMLHttpRequest();
+
+            xmlhttp.onreadystatechange = function() {
+                if (this.readyState == 4 && this.status == 200) {
+                    let objRetorno = JSON.parse(this.responseText);
+
+                    if (objRetorno.encontrou == "sim") {
+                        document.getElementById("pergunta").value = objRetorno.pergunta;
+
+                        for (let i = 1; i <= 4; i++) {
+                            document.getElementById("IDresposta" + i).value = "";
+                            document.getElementById("resposta" + i).value = "";
+                            document.getElementById("certa" + i).value = "";
+                        }
+
+                        for (let i = 0; i < objRetorno.respostas.length; i++) {
+                            let n = i + 1;
+                            document.getElementById("IDresposta" + n).value = objRetorno.respostas[i].IDresposta;
+                            document.getElementById("resposta" + n).value = objRetorno.respostas[i].resposta;
+                            document.getElementById("certa" + n).value = objRetorno.respostas[i].certa;
+                        }
+
+                        document.getElementById("msg").innerHTML = "";
+                        document.getElementById("frmEditar").style.display = "block";
+                    } else {
+                        document.getElementById("frmEditar").style.display = "none";
+                        document.getElementById("msg").innerHTML = "Pergunta não encontrada.";
+                    }
+                } else if (this.readyState == 4) {
+                    document.getElementById("msg").innerHTML = "Erro na requisição: " + this.status;
+                }
+            }
+
+            xmlhttp.open("GET", "alterar_multipla.php?acao=buscar&IDpergunta=" + encodeURIComponent(IDpergunta));
+
+            xmlhttp.send();
+        }
+
+        function Salvar() {
+            let IDpergunta = document.getElementById("IDpergunta").value;
+            let pergunta = document.getElementById("pergunta").value;
+
+            let url = "alterar_multipla.php?acao=salvar&IDpergunta=" + encodeURIComponent(IDpergunta) + "&pergunta=" + encodeURIComponent(pergunta);
+
+            for (let i = 1; i <= 4; i++) {
+                let IDresposta = document.getElementById("IDresposta" + i).value;
+                let resposta = document.getElementById("resposta" + i).value;
+                let certa = document.getElementById("certa" + i).value;
+
+                url = url + "&IDresposta" + i + "=" + encodeURIComponent(IDresposta) + "&resposta" + i + "=" + encodeURIComponent(resposta) + "&certa" + i + "=" + encodeURIComponent(certa);
+            }
+
+            let xmlhttp = new XMLHttpRequest();
+
+            xmlhttp.onreadystatechange = function() {
+                if (this.readyState == 4 && this.status == 200) {
+                    let objRetorno = JSON.parse(this.responseText);
+                    document.getElementById("msg").innerHTML = objRetorno.msg;
+                    document.getElementById("frmEditar").style.display = "none";
+                } else if (this.readyState == 4) {
+                    document.getElementById("msg").innerHTML = "Erro na requisição: " + this.status;
+                }
+            }
+
+            xmlhttp.open("GET", url);
+
+            xmlhttp.send();
+        }
+    </script>
+</head>
+
+<body>
+
+    <h1>Alterar Pergunta (Múltipla Escolha)</h1>
+
+    <form action="" method="GET" name="frmBuscar" id="frmBuscar">
+        IDpergunta a alterar: <input type="text" name="IDpergunta" id="IDpergunta">
+        <br><br>
+        <input type="button" value="Buscar" onclick="Buscar()">
+    </form>
+
+    <br>
+
+    <form action="" method="GET" name="frmEditar" id="frmEditar" style="display: none;">
+        <h2>Editar Pergunta</h2>
+
+        Pergunta: <input type="text" name="pergunta" id="pergunta">
+        <br><br>
+
+        <h3>Alternativas (certa: 1 para a correta, 0 para as demais)</h3>
+
+        <input type="hidden" name="IDresposta1" id="IDresposta1">
+        Resposta 1: <input type="text" name="resposta1" id="resposta1">
+        Certa: <input type="text" name="certa1" id="certa1">
+        <br><br>
+
+        <input type="hidden" name="IDresposta2" id="IDresposta2">
+        Resposta 2: <input type="text" name="resposta2" id="resposta2">
+        Certa: <input type="text" name="certa2" id="certa2">
+        <br><br>
+
+        <input type="hidden" name="IDresposta3" id="IDresposta3">
+        Resposta 3: <input type="text" name="resposta3" id="resposta3">
+        Certa: <input type="text" name="certa3" id="certa3">
+        <br><br>
+
+        <input type="hidden" name="IDresposta4" id="IDresposta4">
+        Resposta 4: <input type="text" name="resposta4" id="resposta4">
+        Certa: <input type="text" name="certa4" id="certa4">
+        <br><br>
+
+        <input type="button" value="Salvar Alteração" onclick="Salvar()">
+    </form>
+
+    <br>
+
+    <div id="msg"></div>
+
+</body>
+</html>
