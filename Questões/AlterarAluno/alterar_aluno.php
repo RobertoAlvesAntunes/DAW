@@ -12,7 +12,7 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
     $matricula = $_GET["matricula"];
     $nome = $_GET["nome"];
     $email = $_GET["email"];
-    $comandoSQL = "UPDATE FROM Alunos SET nome = '$nome', email = '$email' WHERE matricula = '$matricula'";
+    $comandoSQL = "UPDATE Alunos SET nome = '$nome', email = '$email' WHERE matricula = '$matricula'";
     $resultado = $conn->query($comandoSQL);
 
 }
