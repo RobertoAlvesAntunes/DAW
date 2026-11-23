@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Incluir Disciplina</title>
+    <script>
+         function EnviarDisciplina() {
+            let objForm = document.getElementById("formDisciplina");
+            let nome = document.getElementById("nome").value;
+            let horas = document.getElementById("horas").value;
+            let sigla = document.getElementById("sigla").value;
+            let objForm2 = {"horas": horas,"nome":nome,"sigla":sigla};
+            let objJson = JSON.stringify(objForm);
+
+            let xmlhttp = new XMLHttpRequest();
+            xmlhttp.onreadystatechange = function() {
+                if (this.readyState == 4 && this.status == 200) {
+                    console.log("Chegou a resposta OK: " + this.responseText);
+                    console.log("2");
+                    document.getElementById("msg").innerHTML = this.responseText;
+                } else
+                    if (this.readyState < 4) {
+                        console.log("3: " + this.readyState);
+                    } else
+                        console.log("Requisicao falhou: " + this.status);
+            }
+            xmlhttp.open("GET", "http://localhost/3daw/IncluirDisciplina.php?sigla=" + sigla +
+                            "&nome=" + nome + "&carga=" + carga);
+            xmlhttp.send();
+
+        }
+        function ValidaForm(psigla, pnome, pcarga) {
+            let msg = "";
+            if (psigla == "") msg = "sigla não preenchida. <br>";
+
+            return msg;
+        }
+    </script>
+</head>
+<body>
+<h1>Inserir Disciplina</h1>
+<br>
+<a href="incluirDisciplina.html">Inserir Aluno</a><br>
+<a href="alterarDisciplina.html">Alterar Aluno</a><br>
+<a href="listarDisciplina.html">Listar Alunos</a><br>
+<a href="excluirDisciplinahtml">Excluir Aluno</a><br>
+<br>
+<form action="" method=POST name="formDisciplina" id="formDisciplina">
+    Matricula: <input type=text name="sigla" id="sigla" required> <br>
+    nome: <input type=text name="nome" id="nome"> <br>
+    email: <input type=text name="carga" id="carga"> <br>
+    <br><br>
+    <input type="button" value="Inserir" onclick="return EnviarDisciplina();">
+</form>
+<p id="msg"></p>
+<br>
+</body>
+</html>
